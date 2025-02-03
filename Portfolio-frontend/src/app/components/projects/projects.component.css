@@ -1,0 +1,23 @@
+/* projects.component.css */
+.project-list {
+    margin: 20px;
+  }
+  
+  .project-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .project-item h3 {
+    margin: 0;
+  }
+  
+  .project-item p {
+    margin: 5px 0;
+  }
+  
+  .project-item button {
+    margin-right: 10px;
+  }

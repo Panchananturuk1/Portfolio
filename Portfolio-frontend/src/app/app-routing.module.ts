@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'contact', component: ContactComponent },
-  { path: '**', redirectTo: '' } // Redirect to home for unknown routes
+  // { path: '**', redirectTo: '' } // Redirect to home for unknown routes
 ];
 
 @NgModule({

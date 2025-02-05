@@ -1,3 +1,4 @@
 npx ng generate component components/home
 npx ng generate component components/projects
 npx ng generate component components/contact
+

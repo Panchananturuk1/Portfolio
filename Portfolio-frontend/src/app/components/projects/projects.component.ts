@@ -9,6 +9,7 @@ import { Project } from '../../models/project.model';
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
+  newProject: Project = { title: '', description: '', imageUrl: '' };
   selectedProject: Project | null = null;
 
   constructor(private apiService: ApiService) {}
@@ -17,28 +18,40 @@ export class ProjectsComponent implements OnInit {
     this.loadProjects();
   }
 
+  // Load all projects (GET)
   loadProjects(): void {
-    this.apiService.getProjects().subscribe(data => {
+    this.apiService.getProjects().subscribe((data) => {
       this.projects = data;
     });
   }
 
-  selectProject(project: Project): void {
-    this.selectedProject = { ...project }; // Create a copy of the project
+  // Create a new project (POST)
+  createProject(): void {
+    this.apiService.createProject(this.newProject).subscribe((createdProject) => {
+      this.projects.push(createdProject);
+      this.newProject = { title: '', description: '', imageUrl: '' }; // Reset form
+    });
   }
 
-  updateProject(project: Project): void {
-    if (project.id) {
-      this.apiService.updateProject(project.id, project).subscribe(() => {
-        this.loadProjects(); // Refresh the list after updating
-        this.selectedProject = null; // Clear the selected project
+  // Update a project (PUT)
+  updateProject(): void {
+    if (this.selectedProject && this.selectedProject.id) {
+      this.apiService.updateProject(this.selectedProject.id, this.selectedProject).subscribe(() => {
+        this.loadProjects(); // Refresh the list
+        this.selectedProject = null; // Clear selection
       });
     }
   }
 
-  deleteProject(id: string): void {
+  // Delete a project (DELETE)
+  deleteProject(id: number): void {
     this.apiService.deleteProject(id).subscribe(() => {
-      this.loadProjects(); // Refresh the list after deleting
+      this.projects = this.projects.filter((project) => project.id !== id);
     });
+  }
+
+  // Select a project for editing
+  selectProject(project: Project): void {
+    this.selectedProject = { ...project }; // Clone the project to avoid direct reference
   }
 }
